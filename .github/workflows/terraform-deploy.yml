@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 env:
-  AWS_REGION: us-west-w
+  AWS_REGION: us-west-2
   TF_VERSION: 1.7.0
 
 jobs:
