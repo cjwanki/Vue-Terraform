@@ -1,0 +1,29 @@
+{
+  "family": "vue-app",
+  "networkMode": "awsvpc",
+  "requiresCompatibilities": ["FARGATE"],
+  "cpu": "256",
+  "memory": "512",
+  "executionRoleArn": "arn:aws:iam::147330899799:role/ECSTaskExecutionRole",
+  "containerDefinitions": [
+    {
+      "name": "vue-app",
+      "image": "147330899799.dkr.ecr.us-west-2.amazonaws.com/vue-app:latest",
+      "portMappings": [
+        {
+          "containerPort": 80,
+          "protocol": "tcp"
+        }
+      ],
+      "essential": true,
+      "logConfiguration": {
+        "logDriver": "awslogs",
+        "options": {
+          "awslogs-group": "/ecs/vue-app",
+          "awslogs-region": "us-west-2",
+          "awslogs-stream-prefix": "ecs"
+        }
+      }
+    }
+  ]
+}
