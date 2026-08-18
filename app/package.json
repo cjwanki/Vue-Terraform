@@ -1,7 +1,7 @@
 {
-  "name": "bme-ticketing-app",
+  "name": "vue-streaming-app",
   "version": "1.0.0",
-  "description": "Simple ticketing web application for BME - Docker + ECR + ECS Fargate project",
+  "description": "Vue video streaming service demo application - containerized for ECS Fargate",
   "main": "server.js",
   "scripts": {
     "start": "node server.js"
