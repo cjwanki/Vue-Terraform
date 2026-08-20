@@ -35,7 +35,7 @@ variable "container_image" {
 variable "container_port" {
   description = "Container port"
   type        = number
-  default     = 80
+  default     = 3000
 }
 
 variable "desired_count" {

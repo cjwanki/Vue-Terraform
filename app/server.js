@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const PORT = process.env.PORT || 80;
+const PORT = process.env.PORT || 3000;
 
 app.get('/', (req, res) => {
   res.send(`
@@ -132,7 +132,7 @@ app.get('/', (req, res) => {
   </div>
 
   <p class="footer">
-    Project 2 — Week 5 Day 2 (Assessment 18)<br>
+    Project 3 — Production ECS + ALB<br>
     Vue Video Streaming • Cloud Engineering
   </p>
 </body>
