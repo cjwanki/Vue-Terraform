@@ -2,8 +2,8 @@ aws_region        = "us-west-2"
 environment       = "prod"
 project_name      = "vue"
 
-vpc_id            = "vpc-xxxxxxxx"
-public_subnet_ids = ["subnet-aaaaaaaa", "subnet-bbbbbbbb"]
+vpc_id            = "vpc-06e8a88e8ed45a777"
+public_subnet_ids = ["subnet-0f79158b9d4d1c94a", "subnet-0bf75b390e212af3e"]
 
 container_image   = "147330899799.dkr.ecr.us-west-2.amazonaws.com/vue-app:latest"
 desired_count     = 2
