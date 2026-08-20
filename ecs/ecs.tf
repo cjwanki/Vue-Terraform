@@ -1,10 +1,10 @@
 resource "aws_cloudwatch_log_group" "ecs" {
-  name              = "/ecs/${var.project_name}-app"
+  name              = "/ecs/${var.project_name}-app-prod"
   retention_in_days = 14
 }
 
 resource "aws_ecs_cluster" "main" {
-  name = "${var.project_name}-cluster"
+  name = "${var.project_name}-prod-cluster"
 
   setting {
     name  = "containerInsights"
