@@ -1,0 +1,12 @@
+aws_region        = "us-west-2"
+environment       = "prod"
+project_name      = "vue"
+
+vpc_id            = "vpc-xxxxxxxx"
+public_subnet_ids = ["subnet-aaaaaaaa", "subnet-bbbbbbbb"]
+
+container_image   = "147330899799.dkr.ecr.us-west-2.amazonaws.com/vue-app:latest"
+desired_count     = 2
+
+# Leave empty if you do not have a domain yet
+# domain_name     = "app.yourdomain.com"
