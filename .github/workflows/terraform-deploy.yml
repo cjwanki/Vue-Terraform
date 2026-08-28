@@ -1,64 +1,86 @@
-name: Vue Terraform CI/CD Pipeline
+name: Vue Terraform CI/CD — Production
 
 on:
   push:
     branches: [main]
   pull_request:
     branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  id-token: write
 
 env:
   AWS_REGION: us-west-2
-  TF_VERSION: 1.7.0
+  TF_VERSION: "1.7.0"
+  TF_WORKING_DIR: Prod
 
 jobs:
-  terraform-plan:
-    name: Terraform Plan
+  prod-plan:
+    name: Prod — Terraform Plan
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: environments/dev
+        working-directory: ${{ env.TF_WORKING_DIR }}
     steps:
-      - name: Checkout Code
+      - name: Checkout
         uses: actions/checkout@v4
-      - name: Configure AWS Credentials
+
+      - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: ${{ env.TF_VERSION }}
+
       - name: Terraform Init
         run: terraform init
+
       - name: Terraform Validate
         run: terraform validate
-      - name: Terraform Plan
-        run: terraform plan -no-color
 
-  terraform-apply:
-    name: Terraform Apply
+      - name: Terraform Plan
+        run: terraform plan -no-color -out=tfplan
+
+      - name: Upload plan
+        uses: actions/upload-artifact@v4
+        with:
+          name: prod-tfplan
+          path: ${{ env.TF_WORKING_DIR }}/tfplan
+
+  prod-apply:
+    name: Prod — Terraform Apply
     runs-on: ubuntu-latest
-    needs: terraform-plan
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    needs: prod-plan
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+    environment: prod-approval
     defaults:
       run:
-        working-directory: environments/dev
+        working-directory: ${{ env.TF_WORKING_DIR }}
     steps:
-      - name: Checkout Code
+      - name: Checkout
         uses: actions/checkout@v4
-      - name: Configure AWS Credentials
+
+      - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ env.AWS_REGION }}
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: ${{ env.TF_VERSION }}
+
       - name: Terraform Init
         run: terraform init
+
       - name: Terraform Apply
         run: terraform apply -auto-approve
