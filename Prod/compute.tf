@@ -6,7 +6,7 @@ resource "aws_instance" "vue_prod_web_1" {
   vpc_security_group_ids = [aws_security_group.vpc_web_sg.id]
 
   tags = {
-    Name = "vue-prod-web-1"
+    Name = "vue-prod_web_1"
   }
 
   user_data = <<-EOF
