@@ -1,5 +1,5 @@
 # Public EC2 Instances (Web Tier)
-resource "aws_instance" "vue-prod-app-buckettt" {
+resource "aws_instance" "vue_prod_web_1" {
   ami                    = "ami-066a7fbea5161f451"
   instance_type          = "t3.micro"
   subnet_id              = aws_subnet.public_subnet_1.id
