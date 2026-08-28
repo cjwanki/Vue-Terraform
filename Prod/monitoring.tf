@@ -151,7 +151,7 @@ resource "aws_cloudwatch_metric_alarm" "vue-prod_rds_cpu_alarm" {
   statistic           = "Average"
   threshold           = 85
   dimensions = {
-    DBInstanceIdentifier = aws_db_instance.vue-prod_db.id # Ensure this RDS instance is defined in the configuration
+    DBInstanceIdentifier = aws_db_instance.vue_prod_web_1.id # Ensure this RDS instance is defined in the configuration
   }
 
   alarm_actions = [aws_sns_topic.vue-prod_alarm_topic.arn]
